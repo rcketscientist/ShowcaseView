@@ -13,6 +13,8 @@ import com.github.espiandev.showcaseview.sample.fragments.ShowcaseFragmentActivi
 import com.github.espiandev.showcaseview.sample.legacy.MultipleShowcaseSampleActivity;
 import com.github.espiandev.showcaseview.sample.v14.ActionItemsSampleActivity;
 import com.github.espiandev.showcaseview.sample.v14.MultipleActionItemsSampleActivity;
+import com.github.espiandev.showcaseview.target.Target;
+import com.github.espiandev.showcaseview.target.ViewTarget;
 
 public class SampleActivity extends Activity implements View.OnClickListener,
         ShowcaseView.OnShowcaseEventListener {
@@ -48,7 +50,8 @@ public class SampleActivity extends Activity implements View.OnClickListener,
 //        lps.setMargins(margin, margin, margin, margin);
 //        co.buttonLayoutParams = lps;
 
-        sv = ShowcaseView.insertShowcaseView(R.id.buttonBlocked, this, R.string.showcase_main_title, R.string.showcase_main_message, co);
+        Target buttonBlockedTarget = new ViewTarget(this, R.id.buttonBlocked);
+        sv = ShowcaseView.insertShowcaseView(buttonBlockedTarget, this, R.string.showcase_main_title, R.string.showcase_main_message, co);
         sv.setOnShowcaseEventListener(this);
 
     }

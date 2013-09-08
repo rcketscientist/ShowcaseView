@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -31,6 +32,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.github.espiandev.showcaseview.anim.AnimationUtils;
+import com.github.espiandev.showcaseview.target.Target;
+import com.github.espiandev.showcaseview.target.ViewTarget;
 
 import java.lang.reflect.Field;
 
@@ -66,12 +69,12 @@ public class ShowcaseView extends RelativeLayout implements View.OnClickListener
     private boolean isRedundant = false;
     private boolean hasCustomClickListener = false;
     private ConfigOptions mOptions;
-    private Paint  mEraser;
+    private Paint mEraser;
     private TextPaint mPaintDetail, mPaintTitle;
     private int backColor;
     private Drawable showcase;
     private View mHandy;
-    private final Button mEndButton;
+    Button mEndButton;
     private OnShowcaseEventListener mEventListener;
     private Rect voidedArea;
     private CharSequence mTitleText, mSubText;
@@ -85,6 +88,7 @@ public class ShowcaseView extends RelativeLayout implements View.OnClickListener
     private float scaleMultiplier = 1f;
     private Bitmap mBleachedCling;
     private int mShowcaseColor;
+    private Target mShowcaseTarget;
 
     protected ShowcaseView(Context context) {
         this(context, null, R.styleable.CustomTheme_showcaseViewStyle);
@@ -588,6 +592,27 @@ public class ShowcaseView extends RelativeLayout implements View.OnClickListener
         this.scaleMultiplier = scaleMultiplier;
     }
 
+    public void setShowcaseTarget(Target showcaseTarget) {
+        mShowcaseTarget = showcaseTarget;
+        if (mShowcaseTarget instanceof ViewTarget) {
+            ((ViewTarget) mShowcaseTarget).setInsertToDecor(mOptions.insert == INSERT_TO_DECOR);
+        }
+        post(new Runnable() {
+            @Override
+            public void run() {
+                init();
+                Point p = mShowcaseTarget.getTargetPoint();
+                showcaseX = p.x;
+                showcaseY = p.y;
+                invalidate();
+            }
+        });
+    }
+
+    public Target getShowcaseTarget() {
+        return mShowcaseTarget;
+    }
+
     public interface OnShowcaseEventListener {
 
         public void onShowcaseViewHide(ShowcaseView showcaseView);
@@ -648,7 +673,7 @@ public class ShowcaseView extends RelativeLayout implements View.OnClickListener
         AnimationUtils.createMovementAnimation(mHandy, x, y).start();
     }
 
-    private void setConfigOptions(ConfigOptions options) {
+    void setConfigOptions(ConfigOptions options) {
         mOptions = options;
     }
 
@@ -656,6 +681,28 @@ public class ShowcaseView extends RelativeLayout implements View.OnClickListener
         // Make sure that this method never returns null
         if (mOptions == null) return mOptions = new ConfigOptions();
         return mOptions;
+    }
+
+    public static ShowcaseView insertShowcaseView(Target target, Activity activity, String title,
+                                                  String detail, ConfigOptions options) {
+        ShowcaseView sv = new ShowcaseView(activity);
+        if (options != null)
+            sv.setConfigOptions(options);
+        if (sv.getConfigOptions().insert == INSERT_TO_DECOR) {
+            ((ViewGroup) activity.getWindow().getDecorView()).addView(sv);
+        } else {
+            ((ViewGroup) activity.findViewById(android.R.id.content)).addView(sv);
+        }
+        sv.setShowcaseTarget(target);
+        sv.setText(title, detail);
+        return sv;
+    }
+
+    public static ShowcaseView insertShowcaseView(Target target, Activity activity, int title,
+                                                  int detail, ConfigOptions options) {
+        String realTitle = activity.getString(title);
+        String realDetail = activity.getString(detail);
+        return insertShowcaseView(target, activity, realTitle, realDetail, options);
     }
 
     /**
