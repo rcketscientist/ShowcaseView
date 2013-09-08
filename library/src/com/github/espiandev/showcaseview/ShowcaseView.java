@@ -698,6 +698,13 @@ public class ShowcaseView extends RelativeLayout implements View.OnClickListener
         return sv;
     }
 
+    /**
+     * @param target         Target to showcase
+     * @param activity       Activity to insert into
+     * @param title          Text to show as a title. Can be null.
+     * @param detail         More detailed text. Can be null.
+     * @param options        A set of options to customise the ShowcaseView
+     */
     public static ShowcaseView insertShowcaseView(Target target, Activity activity, int title,
                                                   int detail, ConfigOptions options) {
         String realTitle = activity.getString(title);
@@ -705,106 +712,8 @@ public class ShowcaseView extends RelativeLayout implements View.OnClickListener
         return insertShowcaseView(target, activity, realTitle, realDetail, options);
     }
 
-    /**
-     * Quick method to insert a ShowcaseView into an Activity
-     *
-     * @param viewToShowcase View to showcase
-     * @param activity       Activity to insert into
-     * @param title          Text to show as a title. Can be null.
-     * @param detailText     More detailed text. Can be null.
-     * @param options        A set of options to customise the ShowcaseView
-     * @return the created ShowcaseView instance
-     */
-    public static ShowcaseView insertShowcaseView(View viewToShowcase, Activity activity, String title,
-                                                  String detailText, ConfigOptions options) {
-        ShowcaseView sv = new ShowcaseView(activity);
-        if (options != null)
-            sv.setConfigOptions(options);
-        if (sv.getConfigOptions().insert == INSERT_TO_DECOR) {
-            ((ViewGroup) activity.getWindow().getDecorView()).addView(sv);
-        } else {
-            ((ViewGroup) activity.findViewById(android.R.id.content)).addView(sv);
-        }
-        sv.setShowcaseView(viewToShowcase);
-        sv.setText(title, detailText);
-        return sv;
-    }
-
-    /**
-     * Quick method to insert a ShowcaseView into an Activity
-     *
-     * @param viewToShowcase View to showcase
-     * @param activity       Activity to insert into
-     * @param title          Text to show as a title. Can be null.
-     * @param detailText     More detailed text. Can be null.
-     * @param options        A set of options to customise the ShowcaseView
-     * @return the created ShowcaseView instance
-     */
-    public static ShowcaseView insertShowcaseView(View viewToShowcase, Activity activity, int title,
-                                                  int detailText, ConfigOptions options) {
-        ShowcaseView sv = new ShowcaseView(activity);
-        if (options != null)
-            sv.setConfigOptions(options);
-        if (sv.getConfigOptions().insert == INSERT_TO_DECOR) {
-            ((ViewGroup) activity.getWindow().getDecorView()).addView(sv);
-        } else {
-            ((ViewGroup) activity.findViewById(android.R.id.content)).addView(sv);
-        }
-        sv.setShowcaseView(viewToShowcase);
-        sv.setText(title, detailText);
-        return sv;
-    }
-
-    public static ShowcaseView insertShowcaseView(int showcaseViewId, Activity activity, String title,
-                                                  String detailText, ConfigOptions options) {
-        View v = activity.findViewById(showcaseViewId);
-        if (v != null) {
-            return insertShowcaseView(v, activity, title, detailText, options);
-        }
-        return null;
-    }
-
-    public static ShowcaseView insertShowcaseView(int showcaseViewId, Activity activity, int title,
-                                                  int detailText, ConfigOptions options) {
-        View v = activity.findViewById(showcaseViewId);
-        if (v != null) {
-            return insertShowcaseView(v, activity, title, detailText, options);
-        }
-        return null;
-    }
-
-    public static ShowcaseView insertShowcaseView(float x, float y, Activity activity, String title,
-                                                  String detailText, ConfigOptions options) {
-        ShowcaseView sv = new ShowcaseView(activity);
-        if (options != null)
-            sv.setConfigOptions(options);
-        if (sv.getConfigOptions().insert == INSERT_TO_DECOR) {
-            ((ViewGroup) activity.getWindow().getDecorView()).addView(sv);
-        } else {
-            ((ViewGroup) activity.findViewById(android.R.id.content)).addView(sv);
-        }
-        sv.setShowcasePosition(x, y);
-        sv.setText(title, detailText);
-        return sv;
-    }
-
-    public static ShowcaseView insertShowcaseView(float x, float y, Activity activity, int title,
-                                                  int detailText, ConfigOptions options) {
-        ShowcaseView sv = new ShowcaseView(activity);
-        if (options != null)
-            sv.setConfigOptions(options);
-        if (sv.getConfigOptions().insert == INSERT_TO_DECOR) {
-            ((ViewGroup) activity.getWindow().getDecorView()).addView(sv);
-        } else {
-            ((ViewGroup) activity.findViewById(android.R.id.content)).addView(sv);
-        }
-        sv.setShowcasePosition(x, y);
-        sv.setText(title, detailText);
-        return sv;
-    }
-
     public static ShowcaseView insertShowcaseView(View showcase, Activity activity) {
-        return insertShowcaseView(showcase, activity, null, null, null);
+        return insertShowcaseView(new ViewTarget(showcase), activity, null, null, null);
     }
 
     /**
@@ -855,10 +764,6 @@ public class ShowcaseView extends RelativeLayout implements View.OnClickListener
         sv.setShowcaseItem(type, itemId, activity);
         sv.setText(title, detailText);
         return sv;
-    }
-
-    public static ShowcaseView insertShowcaseView(float x, float y, Activity activity) {
-        return insertShowcaseView(x, y, activity, null, null, null);
     }
 
     public static class ConfigOptions {
