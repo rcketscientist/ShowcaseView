@@ -17,6 +17,7 @@
 package com.github.amlcurran.showcaseview.sample;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,12 +35,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.espian.showcaseview.sample.R;
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.sample.animations.AnimationSampleActivity;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
-public class SampleActivity extends AppCompatActivity implements View.OnClickListener,
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         OnShowcaseEventListener, AdapterView.OnItemClickListener {
 
     private static final float ALPHA_DIM_VALUE = 0.1f;
@@ -123,48 +126,16 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
+    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        switch (position) {
-            case 0:
-                startActivity(new Intent(this, ActionItemsSampleActivity.class));
-                break;
-            case 1:
-                startActivity(new Intent(this, AnimationSampleActivity.class));
-                break;
-            case 2:
-                startActivity(new Intent(this, SingleShotActivity.class));
-                break;
-            case 3:
-                startActivity(new Intent(this, CustomTextActivity.class));
-                break;
-            case 4:
-                startActivity(new Intent(this, CustomShowcaseActivity.class));
-                break;
-            case 5:
-                startActivity(new Intent(this, MemoryManagementTesting.class));
-                break;
-        }
+        startActivity(new Intent(this, DemoOption.values()[position].activityClass));
     }
 
     private static class HardcodedListAdapter extends ArrayAdapter {
-
-        private static final int[] TITLE_RES_IDS = new int[] {
-                R.string.title_action_items,
-                R.string.title_animations,
-                R.string.title_single_shot,
-                R.string.custom_text,
-                 R.string.custom_showcase_title,
-                R.string.title_memory
-        };
-
-        private static final int[] SUMMARY_RES_IDS = new int[] {
-                R.string.sum_action_items,
-                R.string.sum_animations,
-                R.string.sum_single_shot,
-                R.string.custom_text_summary,
-                R.string.custom_showcase_summary,
-                R.string.sum_memory
-        };
 
         public HardcodedListAdapter(Context context) {
             super(context, R.layout.item_next_thing);
@@ -172,7 +143,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         public int getCount() {
-            return TITLE_RES_IDS.length;
+            return DemoOption.values().length;
         }
 
         @Override
@@ -180,10 +151,33 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_next_thing, parent, false);
             }
-            ((TextView) convertView.findViewById(R.id.textView)).setText(TITLE_RES_IDS[position]);
-            ((TextView) convertView.findViewById(R.id.textView2)).setText(SUMMARY_RES_IDS[position]);
+            DemoOption currentOption = DemoOption.values()[position];
+            ((TextView) convertView.findViewById(R.id.textView)).setText(currentOption.titleRes);
+            ((TextView) convertView.findViewById(R.id.textView2)).setText(currentOption.summaryRes);
             return convertView;
         }
+    }
+
+    private enum DemoOption {
+        ACTION_ITEMS(R.string.title_action_items, R.string.sum_action_items, ActionItemsSampleActivity.class),
+        FRAGMENTS(R.string.title_fragments, R.string.sum_fragments, FragmentDemoActivity.class),
+        EVENTS(R.string.title_events, R.string.sum_event, EventsActivity.class),
+        SINGLE_SHOT(R.string.title_single_shot, R.string.sum_single_shot, SingleShotActivity.class),
+        ANIMATIONS(R.string.title_animations, R.string.sum_animations, AnimationSampleActivity.class),
+        CUSTOM_TEXT(R.string.custom_text, R.string.custom_text_summary, CustomTextActivity.class),
+        CUSTOM_SHOWCASE(R.string.custom_showcase_title, R.string.custom_showcase_summary, CustomShowcaseActivity.class),
+        MEMORY(R.string.title_memory, R.string.sum_memory, MemoryManagementTesting.class);
+
+        final int titleRes;
+        final int summaryRes;
+        final Class<? extends Activity> activityClass;
+
+        DemoOption(int titleRes, int summaryRes, Class<? extends Activity> activityClass) {
+            this.titleRes = titleRes;
+            this.summaryRes = summaryRes;
+            this.activityClass = activityClass;
+        }
+
     }
 
 }

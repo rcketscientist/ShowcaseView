@@ -184,7 +184,10 @@ public class ShowcaseView extends RelativeLayout
 
                 if (!shotStateStore.hasShot()) {
 
-                    updateBitmap();
+                    if (canUpdateBitmap()) {
+                        updateBitmap();
+                    }
+
                     Point targetPoint = target.getPoint();
                     if (targetPoint != null) {
                         hasNoTarget = false;
@@ -362,6 +365,7 @@ public class ShowcaseView extends RelativeLayout
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if (blockAllTouches) {
+            mEventListener.onShowcaseViewTouchBlocked(motionEvent);
             return true;
         }
 
@@ -375,7 +379,11 @@ public class ShowcaseView extends RelativeLayout
             return true;
         }
 
-        return blockTouches && distanceFromFocus > showcaseDrawer.getBlockedRadius();
+        boolean blocked = blockTouches && distanceFromFocus > showcaseDrawer.getBlockedRadius();
+        if (blocked) {
+            mEventListener.onShowcaseViewTouchBlocked(motionEvent);
+        }
+        return blocked;
     }
 
     private static void insertShowcaseView(ShowcaseView showcaseView, ViewGroup parent, int parentIndex) {
@@ -592,7 +600,8 @@ public class ShowcaseView extends RelativeLayout
 
         /**
          * Sets the paint that will draw the text as specified by {@link #setContentText(CharSequence)}
-         * or {@link #setContentText(int)}
+         * or {@link #setContentText(int)}. If you're using a TextAppearance (set by {@link #setStyle(int)},
+         * then this {@link TextPaint} will override that TextAppearance.
          */
         public Builder setContentTextPaint(TextPaint textPaint) {
             showcaseView.setContentTextPaint(textPaint);
@@ -601,7 +610,8 @@ public class ShowcaseView extends RelativeLayout
 
         /**
          * Sets the paint that will draw the text as specified by {@link #setContentTitle(CharSequence)}
-         * or {@link #setContentTitle(int)}
+         * or {@link #setContentTitle(int)}. If you're using a TextAppearance (set by {@link #setStyle(int)},
+         * then this {@link TextPaint} will override that TextAppearance.
          */
         public Builder setContentTitlePaint(TextPaint textPaint) {
             showcaseView.setContentTitlePaint(textPaint);
