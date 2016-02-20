@@ -410,7 +410,7 @@ public class ShowcaseView extends RelativeLayout
         textDrawer.setContentText(text);
     }
 
-    private void setScaleMultiplier(float scaleMultiplier) {
+    public void setScaleMultiplier(float scaleMultiplier) {
         this.scaleMultiplier = scaleMultiplier;
     }
 
