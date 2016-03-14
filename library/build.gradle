@@ -13,17 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0-alpha1'
-    }
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
