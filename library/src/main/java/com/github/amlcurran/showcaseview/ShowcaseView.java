@@ -225,19 +225,21 @@ public class ShowcaseView extends RelativeLayout
     }
 
     public void setShowcaseX(int x) {
-        setShowcasePosition(x, showcaseY);
+        setShowcasePosition(x, getShowcaseY());
     }
 
     public void setShowcaseY(int y) {
-        setShowcasePosition(showcaseX, y);
+        setShowcasePosition(getShowcaseX(), y);
     }
 
     public int getShowcaseX() {
-        return showcaseX;
+        getLocationInWindow(positionInWindow);
+        return showcaseX + positionInWindow[0];
     }
 
     public int getShowcaseY() {
-        return showcaseY;
+        getLocationInWindow(positionInWindow);
+        return showcaseY + positionInWindow[1];
     }
 
     /**
@@ -403,11 +405,13 @@ public class ShowcaseView extends RelativeLayout
     @Override
     public void setContentTitle(CharSequence title) {
         textDrawer.setContentTitle(title);
+        invalidate();
     }
 
     @Override
     public void setContentText(CharSequence text) {
         textDrawer.setContentText(text);
+        invalidate();
     }
 
     public void setScaleMultiplier(float scaleMultiplier) {
@@ -736,7 +740,7 @@ public class ShowcaseView extends RelativeLayout
     /**
      * Set the duration of the fading in and fading out of the ShowcaseView
      */
-    private void setFadeDurations(long fadeInMillis, long fadeOutMillis) {
+    public void setFadeDurations(long fadeInMillis, long fadeOutMillis) {
         this.fadeInMillis = fadeInMillis;
         this.fadeOutMillis = fadeOutMillis;
     }
