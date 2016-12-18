@@ -32,6 +32,7 @@ public class ActionItemTarget implements Target {
     private final Activity mActivity;
     private final int mItemId;
     private boolean isOverflow = false;
+    protected float mRadius;
 
     ActionBarViewWrapper mActionBarWrapper;
 
@@ -55,9 +56,17 @@ public class ActionItemTarget implements Target {
         if (actionItem == null)
         {
             isOverflow = true;
-            return new ViewTarget(mActionBarWrapper.getOverflowView()).getPoint();
+            actionItem = mActionBarWrapper.getOverflowView();
         }
-        return new ViewTarget(actionItem).getPoint();
+        ViewTarget target = new ViewTarget(actionItem);
+        mRadius = target.getRadius();
+        return target.getPoint();
+    }
+
+    @Override
+    public float getRadius()
+    {
+        return mRadius;
     }
 
     protected void setUp() {

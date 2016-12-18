@@ -16,27 +16,25 @@
 
 package com.github.amlcurran.showcaseview.targets;
 
+import android.app.Activity;
 import android.graphics.Point;
+import android.view.View;
 
-public interface Target {
-    Target NONE = new Target() {
-        @Override
-        public Point getPoint() {
-            return new Point(1000000, 1000000);
-        }
+/**
+ * Target a view on the screen. This will centre the target on the view and adjust radius to its longest side.
+ */
+public class MorphViewTarget extends ViewTarget {
+    public MorphViewTarget(View view) {
+        super(view);
+    }
 
-        @Override
-        public float getRadius()
-        {
-            return 0;
-        }
-    };
+    public MorphViewTarget(int viewId, Activity activity) {
+        super(viewId, activity);
+    }
 
-    Point getPoint();
-
-    /**
-     * returns the radius of the view
-     * @return the radius of the view, or -1 if unsupported
-     */
-    float getRadius();
+    @Override
+    public float getRadius()
+    {
+        return Math.max(mView.getHeight(), mView.getWidth()) / 2;
+    }
 }

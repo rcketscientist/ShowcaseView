@@ -78,4 +78,10 @@ public interface ShowcaseDrawer {
      * @param bitmapBuffer bitmap to draw
      */
     void drawToCanvas(Canvas canvas, Bitmap bitmapBuffer);
+
+    /**
+     * Set the radius of the showcase
+     * @param radius the radius in dp
+     */
+    void setShowcaseRadius(float radius);
 }

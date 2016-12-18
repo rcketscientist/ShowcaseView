@@ -100,4 +100,9 @@ class StandardShowcaseDrawer implements ShowcaseDrawer {
         canvas.drawBitmap(bitmapBuffer, 0, 0, basicPaint);
     }
 
+    @Override
+    public void setShowcaseRadius(float radius)
+    {
+        // no-op
+    }
 }

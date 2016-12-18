@@ -24,17 +24,33 @@ import android.graphics.Point;
 public class PointTarget implements Target {
 
     private final Point mPoint;
+    protected float mRadius;
 
     public PointTarget(Point point) {
-        mPoint = point;
+        this(point, -1);
     }
 
     public PointTarget(int xValue, int yValue) {
-        mPoint = new Point(xValue, yValue);
+        this(xValue, yValue, -1);
+    }
+
+	public PointTarget(int xValue, int yValue, float radius) {
+		this(new Point(xValue, yValue), radius);
+	}
+
+    public PointTarget(Point point, float radius) {
+        mPoint = point;
+        mRadius = radius;
     }
 
     @Override
     public Point getPoint() {
         return mPoint;
+    }
+
+    @Override
+    public float getRadius()
+    {
+        return mRadius;
     }
 }

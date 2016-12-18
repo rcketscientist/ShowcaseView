@@ -188,6 +188,9 @@ public class ShowcaseView extends RelativeLayout
                         updateBitmap();
                     }
 
+                    // Set the showcase to target radius if supported by drawer
+                    showcaseDrawer.setShowcaseRadius(target.getRadius());
+
                     Point targetPoint = target.getPoint();
                     if (targetPoint != null) {
                         hasNoTarget = false;

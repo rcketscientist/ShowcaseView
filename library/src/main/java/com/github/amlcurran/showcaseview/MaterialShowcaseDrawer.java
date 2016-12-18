@@ -64,4 +64,10 @@ public class MaterialShowcaseDrawer implements ShowcaseDrawer {
     public void drawToCanvas(Canvas canvas, Bitmap bitmapBuffer) {
         canvas.drawBitmap(bitmapBuffer, 0, 0, basicPaint);
     }
+
+    @Override
+    public void setShowcaseRadius(float radius)
+    {
+        // no-op
+    }
 }

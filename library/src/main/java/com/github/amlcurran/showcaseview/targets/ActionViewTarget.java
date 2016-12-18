@@ -24,6 +24,7 @@ public class ActionViewTarget implements Target {
 
     private final Activity mActivity;
     private final Type mType;
+    protected float mRadius;
 
     ActionBarViewWrapper mActionBarWrapper;
     Reflector mReflector;
@@ -70,7 +71,15 @@ public class ActionViewTarget implements Target {
         if (internal == null)
             return null;
 
+        mRadius = internal.getRadius();
+
         return internal.getPoint();
+    }
+
+    @Override
+    public float getRadius()
+    {
+        return mRadius;
     }
 
     public enum Type {

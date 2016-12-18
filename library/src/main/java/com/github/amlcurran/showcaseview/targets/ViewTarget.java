@@ -25,7 +25,7 @@ import android.view.View;
  */
 public class ViewTarget implements Target {
 
-    private final View mView;
+    protected final View mView;
 
     public ViewTarget(View view) {
         mView = view;
@@ -42,5 +42,11 @@ public class ViewTarget implements Target {
         int x = location[0] + mView.getWidth() / 2;
         int y = location[1] + mView.getHeight() / 2;
         return new Point(x, y);
+    }
+
+    @Override
+    public float getRadius()
+    {
+        return Math.max(mView.getHeight(), mView.getWidth()) / 2;
     }
 }
