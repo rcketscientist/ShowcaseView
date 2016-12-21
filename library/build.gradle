@@ -14,27 +14,25 @@
  * limitations under the License.
  */
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
 
 dependencies {
     repositories {
         mavenCentral()
     }
-    compile 'com.android.support:support-annotations:23.2.0'
-    compile 'com.android.support:support-v4:23.2.0'
+    compile 'com.android.support:support-annotations:25.1.0'
+    compile 'com.android.support:support-v4:25.1.0'
 }
 
 android {
-    compileSdkVersion Integer.parseInt(COMPILE_SDK)
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion 23
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         versionName String.valueOf(parseVersionName())
-        versionCode Integer.parseInt(VERSION_CODE)
-        targetSdkVersion Integer.parseInt(TARGET_SDK)
-        minSdkVersion Integer.parseInt(MIN_SDK_LIBRARY)
+        versionCode 50403
+        targetSdkVersion 23
+        minSdkVersion 9
     }
-    buildToolsVersion '25.0.0'
 }
 
 def parseVersionName() {
@@ -45,5 +43,3 @@ def parseVersionName() {
         return "0"
     }
 }
-
-apply from: 'gradle-mvn-push.gradle'
