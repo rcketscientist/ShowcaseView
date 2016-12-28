@@ -18,7 +18,7 @@ public class MorphShowcaseDrawer implements ShowcaseDrawer {
     private final Paint basicPaint;
     private final Paint eraserPaint;
     private int backgroundColor;
-	private final int margin;
+	private final float margin;
 
     public MorphShowcaseDrawer(Resources resources) {
 		this(resources, 0);
@@ -29,7 +29,7 @@ public class MorphShowcaseDrawer implements ShowcaseDrawer {
 	 * @param resources context resources
 	 * @param margin margin to be added to all sides
 	 */
-	public MorphShowcaseDrawer(Resources resources, int margin) {
+	public MorphShowcaseDrawer(Resources resources, float margin) {
 		DEFAULT_RADIUS = resources.getDimension(R.dimen.showcase_radius_material);
 		this.eraserPaint = new Paint();
 		this.eraserPaint.setColor(0xFFFFFF);

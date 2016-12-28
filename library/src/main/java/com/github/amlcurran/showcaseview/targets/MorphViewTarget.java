@@ -24,17 +24,29 @@ import android.view.View;
  * Target a view on the screen. This will centre the target on the view and adjust radius to its longest side.
  */
 public class MorphViewTarget extends ViewTarget {
+    private final float margin;
     public MorphViewTarget(View view) {
-        super(view);
+        this(view, 0);
     }
 
     public MorphViewTarget(int viewId, Activity activity) {
+        this(viewId, activity, 0);
+    }
+
+    public MorphViewTarget(View view, float margin)
+    {
+        super(view);
+        this.margin = margin;
+    }
+
+    public MorphViewTarget(int viewId, Activity activity, float margin) {
         super(viewId, activity);
+        this.margin = margin;
     }
 
     @Override
     public float getRadius()
     {
-        return Math.max(mView.getHeight(), mView.getWidth()) / 2;
+        return Math.max(mView.getHeight(), mView.getWidth()) / 2 + margin;
     }
 }
