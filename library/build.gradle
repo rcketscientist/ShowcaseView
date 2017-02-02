@@ -19,13 +19,13 @@ dependencies {
     repositories {
         mavenCentral()
     }
-    compile 'com.android.support:support-annotations:25.1.0'
-    compile 'com.android.support:support-v4:25.1.0'
+    compile "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
+    compile "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.2'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         versionName String.valueOf(parseVersionName())
