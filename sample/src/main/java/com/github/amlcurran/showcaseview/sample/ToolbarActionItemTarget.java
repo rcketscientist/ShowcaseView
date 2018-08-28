@@ -18,7 +18,7 @@ package com.github.amlcurran.showcaseview.sample;
 
 import android.graphics.Point;
 import android.support.annotation.IdRes;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;

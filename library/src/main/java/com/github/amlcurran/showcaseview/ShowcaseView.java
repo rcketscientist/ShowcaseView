@@ -25,7 +25,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.support.annotation.IntDef;
 import android.text.Layout;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -41,6 +40,8 @@ import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 import static com.github.amlcurran.showcaseview.AnimationFactory.AnimationEndListener;
 import static com.github.amlcurran.showcaseview.AnimationFactory.AnimationStartListener;
