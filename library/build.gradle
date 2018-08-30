@@ -19,7 +19,7 @@ dependencies {
     repositories {
         mavenCentral()
     }
-    implementation "androidx.annotation:annotation:${rootProject.ext.annotationsVersion}"
+    implementation "androidx.annotation:annotation:${rootProject.ext.annotationVersion}"
     implementation "androidx.core:core:${rootProject.ext.coreVersion}"
 //    implementation "androidx.legacy:legacy-support-v4:${rootProject.ext.supportLibVersion}"
 }
