@@ -2,6 +2,11 @@ def isReleaseBuild() {
     return version.contains("SNAPSHOT") == false
 }
 
+plugins {
+  id "com.android.library" version '8.7.3' apply false
+  id 'org.jetbrains.kotlin.android' version '2.1.0' apply false
+}
+
 /*
  * Copyright 2014 Alex Curran
  *
@@ -31,4 +36,4 @@ allprojects {
   }
 }
 
-apply from:'release.gradle'
+//apply from:'release.gradle'
